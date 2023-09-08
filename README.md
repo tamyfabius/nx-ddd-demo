@@ -1,44 +1,149 @@
-# nx-ddd-demo
-
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/nx-ddd-demo)
-pm ERR!
-npm ERR! While resolving: @angular-architects/ddd@3.1.6
-npm ERR! Found: @angular-devkit/build-angular@15.2.0
-npm ERR! node_modules/@angular-devkit/build-angular
-npm ERR!   dev @angular-devkit/build-angular@"15.2.0" from the root project
-npm ERR!   peer @angular-devkit/build-angular@">= 14.0.0 < 16.0.0" from @nrwl/angular@15.9.6
-npm ERR!   node_modules/@nrwl/angular
-npm ERR!     @nrwl/angular@"15.9.6" from the root project
-npm ERR!   1 more (jest-preset-angular)
-npm ERR!
-npm ERR! Could not resolve dependency:
-npm ERR! peer @nx/angular@">=16.0.0" from @angular-architects/ddd@3.1.6
-npm ERR! node_modules/@angular-architects/ddd
-npm ERR!   @angular-architects/ddd@"^3.1.6" from the root project
-npm ERR!
-npm ERR! Conflicting peer dependency: @angular-devkit/build-angular@16.2.1
-npm ERR! node_modules/@angular-devkit/build-angular
-npm ERR!   peer @angular-devkit/build-angular@"^16.0.0 || ^16.1.0-next.0" from @nguniversal/builders@16.2.0
-PS C:\Users\degiovannita_adm\Desktop\test install\01-pres-nx\skynes> npm install
-npm ERR! code ERESOLVE
-npm ERR! ERESOLVE could not resolve
-npm ERR!
-npm ERR! While resolving: @micro-sentry/angular@6.1.5
-npm ERR! Found: @angular/common@15.2.9
-npm ERR! node_modules/@angular/common
-npm ERR!   @angular/common@"15.2.9" from the root project
-npm ERR!   peer @angular/common@"^15.0.0 || ^16.0.0" from @angular/cdk@15.2.9
-npm ERR!   node_modules/@angular/cdk
-npm ERR!     @angular/cdk@"15.2.9" from the root project
-npm ERR!   12 more (@angular/forms, @angular/platform-browser, ...)
-npm ERR!
-npm ERR! Could not resolve dependency:
-npm ERR! peer @angular/common@"^14.0.0" from @micro-sentry/angular@6.1.5
-npm ERR! node_modules/@micro-sentry/angular
-npm ERR!   @micro-sentry/angular@"6.1.5" from the root project
-npm ERR!
-npm ERR! Conflicting peer dependency: @angular/common@14.3.0
-npm ERR! node_modules/@angular/common
-npm ERR!   peer @angular/common@"^14.0.0" from @micro-sentry/angular@6.1.5
-npm ERR!   node_modules/@micro-sentry/angular
-npm ERR!     @micro-sentry/angular@"6.1.5" from the root project
+{
+"name": "skynes",
+"version": "0.73.0",
+"license": "MIT",
+"scripts": {
+"ng": "nx",
+"postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
+"start": "nx serve",
+"start-skynes": "npx nx run 01-pres-v3:serve:development",
+"start-portail-dof": "npx nx run portail-dof-v0:serve:development",
+"startAdmin": "nx run 01-pres-v3:serve --host swdcfrsu7943.fr.intranet --disableHostCheck true --ssl false --port 4201",
+"build": "nx build",
+"build-skynes": "npx nx run 01-pres-v3:build --prod --aot --output-hashing=all",
+"build-portail-dof": "npx nx run portail-dof-v0:build --prod --aot --output-hashing=all",
+"build:stats": "ng build --stats-json",
+"clean:dist": "npx rimraf dist",
+"clean:tmp": "npx rimraf tmp",
+"clean:cache": "npx rimraf node_modules/.cache",
+"clean": "npx run-p clean:dist clean:tmp clean:cache",
+"prepare": "cd ../ && husky install ./skynes/.husky && husky add ./skynes/.husky/pre-commit \"cd ./skynes && npx pretty-quick --staged && npx lint-staged --relative\"",
+"test": "npx nx test",
+"test-skynes": "npx nx test 01-pres-v3",
+"test-portail-dof": "npx nx test portail-dof",
+"test-all": "npx nx run-many --all --target=test --parallel --maxParallel=2 --silent --onlyfailed",
+"test-watch": "jest --watch",
+"test-watchAll": "jest --watchAll",
+"test:ci": "jest -ci --runInBand",
+"lint-all": "npx nx affected:lint --all",
+"lint-all-fix": "npx nx affected:lint --all --fix",
+"lint:ci": "npx nx run-many --all --target=lint",
+"prettify": "npx prettier --write .",
+"e2e": "ng e2e",
+"affected": "npx nx affected",
+"affected:apps": "npx nx affected:apps",
+"affected:libs": "npx nx affected:libs",
+"affected:build": "npx nx affected:build",
+"affected:e2e": "npx nx affected:e2e",
+"affected:test": "npx nx affected:test",
+"affected:lint": "npx nx affected:lint",
+"affected:dep-graph": "npx nx affected:dep-graph",
+"format:write": "npx nx format:write",
+"format:check": "npx nx format:check",
+"dep-graph": "npx nx dep-graph",
+"help": "npx nx help"
+},
+"private": true,
+"dependencies": {
+"@angular-architects/ddd": "3.0.0",
+"@angular/animations": "15.2.9",
+"@angular/cdk": "15.2.9",
+"@angular/common": "15.2.9",
+"@angular/compiler": "15.2.9",
+"@angular/core": "15.2.9",
+"@angular/forms": "15.2.9",
+"@angular/platform-browser": "15.2.9",
+"@angular/platform-browser-dynamic": "15.2.9",
+"@angular/router": "15.2.9",
+"@fontsource/poppins": "5.0.8",
+"@fullcalendar/angular": "6.1.8",
+"@fullcalendar/core": "6.1.8",
+"@fullcalendar/daygrid": "6.1.8",
+"@micro-sentry/angular": "6.1.5",
+"@ngneat/dialog": "2.1.0",
+"@ngneat/hot-toast": "4.1.0",
+"@ngneat/overview": "3.0.0",
+"@ngneat/until-destroy": "10.0.0",
+"@ngx-translate/core": "15.0.0",
+"@ngx-translate/http-loader": "8.0.0",
+"@nrwl/angular": "15.9.6",
+"@rxweb/reactive-form-validators": "13.0.1",
+"@rxweb/translate": "1.0.15",
+"@sentry/angular-ivy": "7.68.0",
+"@types/file-saver": "2.0.5",
+"angular-crumbs": "3.0.1",
+"chart.js": "4.4.0",
+"cidr-regex": "^4.0.3",
+"date-fns": "2.30.0",
+"eslint-plugin-import": "2.28.1",
+"eslint-plugin-rxjs": "5.0.3",
+"file-saver-es": "2.0.5",
+"ip-regex": "^5.0.0",
+"lodash": "4.17.21",
+"lodash-es": "4.17.21",
+"ng-let": "16.0.2",
+"ng-mocks": "14.11.0",
+"ngx-date-fns": "10.0.1",
+"primeflex": "3.3.0",
+"primeicons": "6.0.1",
+"primeng": "15.3.0",
+"rxjs": "7.8.0",
+"tslib": "^2.3.0",
+"uuidv4": "6.2.12",
+"web-animations-js": "2.3.2",
+"xlsx": "0.18.5",
+"zone.js": "0.12.0"
+},
+"devDependencies": {
+"@angular-devkit/build-angular": "15.2.0",
+"@angular-eslint/eslint-plugin": "15.0.0",
+"@angular-eslint/eslint-plugin-template": "15.0.0",
+"@angular-eslint/template-parser": "15.0.0",
+"@angular/cli": "~14.2.0",
+"@angular/compiler-cli": "15.2.9",
+"@angular/language-service": "15.2.9",
+"@ngneat/spectator": "14.0.0",
+"@nrwl/cli": "15.9.6",
+"@nrwl/cypress": "15.9.6",
+"@nrwl/eslint-plugin-nx": "15.9.6",
+"@nrwl/jest": "15.9.6",
+"@nrwl/js": "15.9.6",
+"@nrwl/linter": "15.9.6",
+"@nrwl/workspace": "15.9.6",
+"@types/file-saver-es": "2.0.1",
+"@types/jasmine": "4.3.5",
+"@types/jasminewd2": "2.0.10",
+"@types/jest": "29.4.1",
+"@types/lodash": "4.14.198",
+"@types/node": "20.5.9",
+"@types/uuid": "9.0.3",
+"@typescript-eslint/eslint-plugin": "5.60.1",
+"@typescript-eslint/parser": "5.60.1",
+"cypress": "13.1.0",
+"eslint": "8.46.0",
+"eslint-config-prettier": "8.5.0",
+"eslint-plugin-cypress": "2.13.4",
+"eslint-plugin-prettier": "4.2.1",
+"file-saver": "2.0.5",
+"husky": "8.0.3",
+"jasmine-core": "4.2.0",
+"jasmine-spec-reporter": "7.0.0",
+"jest": "29.4.1",
+"jest-environment-jsdom": "29.4.1",
+"jest-preset-angular": "13.0.0",
+"lint-staged": "14.0.1",
+"ng-packagr": "15.2.2",
+"nx": "15.9.6",
+"postcss": "^8.4.5",
+"postcss-import": "~14.1.0",
+"postcss-preset-env": "~7.5.0",
+"postcss-url": "~10.1.3",
+"prettier": "3.0.3",
+"prettier-eslint": "15.0.1",
+"pretty-quick": "3.1.3",
+"protractor": "7.0.0",
+"ts-jest": "29.0.5",
+"ts-node": "10.9.1",
+"typescript": "4.9.5"
+}
+}
